@@ -1,6 +1,6 @@
 """Contains all the main functions that are supposed to be used for performing logical calculations"""
 
-from clauses import Clause
+from clauses import Clause, NegationClause
 from literals import Literal, NegatedLiteral
 from operators import OR, Logical_Operator, BI_IMPLIES, IMPLIES, AND, XOR
 
@@ -73,20 +73,25 @@ Bi_Imp = BI_IMPLIES()
 IMP = IMPLIES()
 
 A = Literal("A")
-not_A = NegatedLiteral("A")
+not_A = NegationClause(A)
 
 B = Literal("B")
-not_B = NegatedLiteral("B")
+
 
 C = Literal("C")
-not_C = NegatedLiteral("C")
 
-subclause_1: Clause = Clause(A, IMP, not_C)
-subclause_2: Clause = Clause(not_B, Bi_Imp, C)
+
+subclause_1: Clause = Clause(A, IMP, NegationClause(A))
+subclause_2: Clause = Clause(NegationClause(B), Bi_Imp, C)
 
 parent_clause: Clause = Clause(subclause_1, ANd, subclause_2)
 
-answer = parent_clause.get_bool_value({A: True, C: True, not_B: True, not_C: True})
+# printing works:
+
+
+
+# print(parent_clause.get_bool_value({A: True, B: True, C: True}))
+answer = parent_clause.get_bool_value({A: True, C: True, B: True, C: True})
 
 print(f"parent clause: {parent_clause} is {answer}.")
 

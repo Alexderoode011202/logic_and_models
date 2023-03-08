@@ -10,7 +10,7 @@ class CorrespondenceError(Exception):
         super().__init__()
 
 class Clause:
-    def __init__(self, left_side, operator, right_side, negation: bool = False):
+    def __init__(self, left_side = None, operator = None, right_side = None, negation: bool = False):
         self.left_side = left_side
         self.operator = operator
         self.right_side = right_side
@@ -24,6 +24,7 @@ class Clause:
         left_bool : bool
         right_bool : bool
         literals: list= self.get_literals()
+
         # print(f"literals = {literals}")
         # print(f"values: {literal_values}")
         # check whether the iterable_values has the same length as the amount of literals in the clause
@@ -100,7 +101,6 @@ class Clause:
             literals.append(self.left_side)
             
         elif self.left_side.get_identity() == "clause":
-            
             literals.extend(self.left_side.get_literals())
 
         # right side
@@ -157,6 +157,23 @@ class NegationClause(Clause):
         super().__init__()
         self.clause = clause
 
-    def get_bool_value(literal_values: dict):
-        answer = self.clause
+    def get_bool_value(self, literal_values: dict):
+        # it is critical to know whether the clause is truly a clause or a literal instead
+        # if a clause:
+        if self.clause.get_identity() == "clause":
+            return self.clause.get_bool_value(literal_values) == False
+        # if a literal:
+        elif self.clause.get_identity() == "literal":
+            return literal_values[self.clause] == False
         
+    def __str__(self):
+        return f"-{self.clause}"
+    
+    def get_literals(self) -> list:
+        if self.clause.get_identity() == "clause":
+            return self.clause.get_literals()
+        elif self.clause.get_identity() == "literal":
+            return [self.clause]
+
+
+ 
