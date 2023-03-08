@@ -12,3 +12,14 @@ def generate_left_side_TT(amount_of_literals: int) -> List[bool]:
 """print(generate_left_side_TT(3))
 
 test_list = []"""
+
+test_list = ["a", "b", "c"]
+
+test_list.insert(2, "o")
+test_list.pop(2+1)
+
+print(test_list)
+
+some_list = [1,2,3]
+
+print(list(zip(test_list, some_list)))

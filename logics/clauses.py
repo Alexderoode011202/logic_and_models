@@ -152,14 +152,11 @@ class Clause:
         else:
             return f"-({self.left_side} {self.operator} {self.right_side})"
     
-    
 class NegationClause(Clause):
     def __init__(self, clause):
         super().__init__()
         self.clause = clause
 
-    def __str__(self):
-        return f"-{self.clause}"
-    
-
+    def get_bool_value(literal_values: dict):
+        answer = self.clause
         
