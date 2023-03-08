@@ -32,12 +32,14 @@ class Clause:
         
         # LEFT CHECK
         if self.left_side.get_identity() == "literal":
+
             if self.left_side.is_negated():
                 if literal_values[self.left_side]:
                     left_bool = False
                 else:
                     left_bool = True
             else:
+
                 left_bool = literal_values[self.left_side]
 
         else:
@@ -50,6 +52,7 @@ class Clause:
             left_bool = self.left_side.get_bool_value(literal_value_dict)
             
         # RIGHT CHECK
+        # If Literal
         if self.right_side.get_identity() == "literal":
             if self.right_side.is_negated():
                 if not literal_values[self.right_side]:
@@ -59,12 +62,15 @@ class Clause:
             else:
                 right_bool = literal_values[self.right_side]
 
+        # If Clause
         else:
             right_literals = self.right_side.get_literals()
+
             literal_value_dict: dict = {}
             for literal in right_literals:
                 literal_value_dict.update({literal: literal_values[literal]})
-            right_bool = self.left_side.get_bool_value(literal_value_dict)
+
+            right_bool = self.right_side.get_bool_value(literal_value_dict)
 
         # confirmation 1
         # print(f"left = {left_bool}, right = {right_bool}")
@@ -102,7 +108,7 @@ class Clause:
             literals.append(self.right_side)
             
         elif self.right_side.get_identity() == "clause":
-            literals.extend(self.right_side.literals())
+            literals.extend(self.right_side.get_literals())
             
 
         return list(set(literals))
@@ -146,8 +152,7 @@ class Clause:
         else:
             return f"-({self.left_side} {self.operator} {self.right_side})"
     
-print("BOOTING UP CLAUSES FILE: SUCCESFULL")
-
+    
 class NegationClause(Clause):
     def __init__(self, clause):
         super().__init__()

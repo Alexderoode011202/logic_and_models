@@ -106,5 +106,3 @@ class BI_IMPLIES(Logical_Operator):
         
         else:
             return False
-
-print("BOOTING UP OPERATORS FILE: SUCCESFULL")

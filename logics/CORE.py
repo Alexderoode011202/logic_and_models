@@ -2,13 +2,11 @@
 
 from clauses import Clause
 from literals import Literal, NegatedLiteral
-from operators import OR, Logical_Operator
+from operators import OR, Logical_Operator, BI_IMPLIES, IMPLIES, AND, XOR
 
 from typing import Optional, Iterable, Union, List, Tuple, Dict
 
 from helpers import generate_left_side_TT as gtt
-
-print("CORE BOOTING UP...")
 
 def generate_TT(clause: Clause):
     """Generates a truth table based on the clause given to the function
@@ -18,20 +16,28 @@ def generate_TT(clause: Clause):
     # Step 1. Get the all the iterables
 
 
+ANd = AND()
 
+Or = OR()
 
-first_literal: Literal = NegatedLiteral("A")
-second_literal: Literal = Literal("B")
+XOr = XOR()
+Bi_Imp = BI_IMPLIES()
+IMP = IMPLIES()
 
-operator_or: Logical_Operator = OR()
+A = Literal("A")
+not_A = NegatedLiteral("A")
 
+B = Literal("B")
+not_B = NegatedLiteral("B")
 
+C = Literal("C")
+not_C = NegatedLiteral("C")
 
-first_clause: Clause = Clause(left_side= first_literal, operator=operator_or, right_side=second_literal, negation= True)
-second_clause : Clause = Clause(left_side = first_clause, operator= operator_or, right_side=second_literal)
-print(f"clause = {first_clause}")
-test = first_clause.get_bool_value({first_literal: True, second_literal: False})
-# print(second_clause.get_literals())
-print(f"result: {test}")
+subclause_1: Clause = Clause(A, IMP, not_C)
+subclause_2: Clause = Clause(not_B, Bi_Imp, C)
 
-print("TEST OVER")
+parent_clause: Clause = Clause(subclause_1, ANd, subclause_2)
+
+answer = parent_clause.get_bool_value({A: True, C: True, not_B: True, not_C: True, A: True})
+
+print(f"parent clause: {parent_clause} is {answer}")

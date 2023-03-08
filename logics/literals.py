@@ -35,9 +35,6 @@ class NegatedLiteral(Literal):
     def __str__(self) -> str:
         return f"-{self.name}"
     
-    
-print("BOOTING UP LITERALS FILE: SUCCESFULL")
-
 
 
 
