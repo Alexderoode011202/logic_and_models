@@ -27,7 +27,7 @@ operator_or: Logical_Operator = OR()
 
 
 
-first_clause: Clause = Clause(left_side= first_literal, operator=operator_or, right_side=second_literal)
+first_clause: Clause = Clause(left_side= first_literal, operator=operator_or, right_side=second_literal, negation= True)
 second_clause : Clause = Clause(left_side = first_clause, operator= operator_or, right_side=second_literal)
 print(f"clause = {first_clause}")
 test = first_clause.get_bool_value({first_literal: True, second_literal: False})

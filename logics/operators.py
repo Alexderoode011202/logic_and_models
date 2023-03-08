@@ -92,4 +92,19 @@ class XOR (Logical_Operator):
         return "XOR"
 
 
+class BI_IMPLIES(Logical_Operator):
+    def __init__(self):
+        super().__init__()
+        return None
+
+    def __str__(self) -> str:
+        return "<->"
+    
+    def calculate_bool_value(self, left: bool, right: bool) -> bool:
+        if left == right:
+            return True
+        
+        else:
+            return False
+
 print("BOOTING UP OPERATORS FILE: SUCCESFULL")
