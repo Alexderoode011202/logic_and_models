@@ -40,12 +40,10 @@ class OR(Logical_Operator):
             :returns: boolean value depending on the input and calculator
         """
         print(f"test 2: left = {left}, right = {right}")
-        if left and right:
-            print("test 3")
-            return 2 > 1
-        else: 
-            print("test 4")
-            return 1 < 2
+        if not left and not right:
+            return False
+        else:
+            True
     def __str__(self) -> str:
         return "OR"
     
@@ -59,6 +57,39 @@ class AND(Logical_Operator):
             return True
         else:
             return False
+        
+    def __str__(self) -> str:
+        return "AND"
+        
+class IMPLIES(Logical_Operator):
+    def __init__(self):
+        super().__init__()
+        return None
+    
+    def __str__(self):
+        return "->"
+    
+    def calculate_bool_value(self, left: bool, right: bool) -> bool:
+        if not left:
+            return True
+        elif right:
+            return True
+        else:
+            return False
+        
+class XOR (Logical_Operator):
+    def __init__(self):
+        super().__init__()
+        return None
+    
+    def calculate_bool_value(self, left: bool, right: bool) -> bool:
+        if left == right:
+            return False
+        else:
+            return True
+        
+    def __str__(self) -> str:
+        return "XOR"
 
 
 print("BOOTING UP OPERATORS FILE: SUCCESFULL")
