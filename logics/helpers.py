@@ -9,6 +9,6 @@ def generate_left_side_TT(amount_of_literals: int) -> List[bool]:
     return full_list
 
 
-print(generate_left_side_TT(3))
+"""print(generate_left_side_TT(3))
 
-test_list = []
+test_list = []"""
