@@ -3,9 +3,9 @@
 from clauses import Clause, NegationClause
 from literals import Literal, NegatedLiteral
 from operators import OR, Logical_Operator, BI_IMPLIES, IMPLIES, AND, XOR
-
+import pandas as pd
 from typing import Optional, Iterable, Union, List, Tuple, Dict
-import pandas
+
 from helpers import generate_left_side_TT as gtt
 
 def generate_TT(clause: Clause):
@@ -20,8 +20,8 @@ def generate_TT(clause: Clause):
 
     # step 1: Generate the left side of the TT (aka, the truth values)
     truth_combinations : List[Tuple[bool, bool, bool]] = gtt(len(literals))
-    print(truth_combinations)
-
+    # print(truth_combinations)
+    
     # step 2: Create the columns for the literals (for pandas)
     literal_columns: List[List[bool]] = []
     for combination in truth_combinations:
@@ -47,7 +47,7 @@ def generate_TT(clause: Clause):
     for comb in truth_combinations:
         sub_dict: dict = {}
         for literal, value in zip(literals, comb):
-            # {A: True}
+            # {A: True, B: True, C: True}
             sub_dict.update({literal: value})
             # [{A: True, ...}, {A: False, ...}]
         truth_dict.append(sub_dict)
@@ -56,9 +56,15 @@ def generate_TT(clause: Clause):
     truth_values: List[bool] = []
     for values in truth_dict:
         truth_values.append(clause.get_bool_value(values))
-        
     # step 5: Now we have the truth values, set up the Dataframe
-    print(truth_values)
+    # Add the truth values of the clause in such a way that it fits the other data
+    for num, row in enumerate(truth_dict):
+        print(clause)
+        print(truth_values[num])
+        row.update({clause: truth_values[num]})
+    # print(f"truth dict: {truth_dict}")
+    df = pd.DataFrame(data= truth_dict)
+    return df
 
 """
 Testing, more testing, and some more testing!
@@ -84,7 +90,7 @@ C = Literal("C")
 subclause_1: Clause = Clause(A, IMP, NegationClause(A))
 subclause_2: Clause = Clause(NegationClause(B), Bi_Imp, C)
 
-parent_clause: Clause = Clause(subclause_1, ANd, subclause_2)
+parent_clause: Clause = Clause(subclause_1, ANd, subclause_2 ,negation=True)
 
 # printing works:
 
@@ -96,4 +102,7 @@ answer = parent_clause.get_bool_value({A: True, C: True, B: True, C: True})
 print(f"parent clause: {parent_clause} is {answer}.")
 
 
-generate_TT(parent_clause)
+test_df = generate_TT(parent_clause)
+test_df.head()
+test_df.to_csv("test.csv")
+

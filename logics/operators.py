@@ -45,7 +45,7 @@ class OR(Logical_Operator):
         else:
             True
     def __str__(self) -> str:
-        return "OR"
+        return "v"
     
 class AND(Logical_Operator):
     def __init__(self):
@@ -59,7 +59,7 @@ class AND(Logical_Operator):
             return False
         
     def __str__(self) -> str:
-        return "AND"
+        return "^"
         
 class IMPLIES(Logical_Operator):
     def __init__(self):
