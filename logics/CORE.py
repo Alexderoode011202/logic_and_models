@@ -5,7 +5,7 @@ from literals import Literal, NegatedLiteral
 from operators import OR, Logical_Operator, BI_IMPLIES, IMPLIES, AND, XOR
 
 from typing import Optional, Iterable, Union, List, Tuple, Dict
-
+import pandas
 from helpers import generate_left_side_TT as gtt
 
 def generate_TT(clause: Clause):
